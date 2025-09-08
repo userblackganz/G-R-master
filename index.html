@@ -340,13 +340,52 @@ style="background-image: url('assets/images/mbr-1-1620x1080.jpg');
   Browser kamu tidak mendukung audio.
 </audio>
 
+<!-- Tombol Musik (Not Musik) -->
+<button id="music-btn">🎵</button>
+
+<style>
+  #music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: #d6336c; /* warna dasar tombol */
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: none;
+    transition: transform 0.3s, background 0.3s;
+    z-index: 9999;
+  }
+
+  /* Saat musik play → tombol muter + warna berubah */
+  #music-btn.playing {
+    background: #28a745;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+
 <script>
-  window.addEventListener('load', function() {
-    const audio = document.getElementById('bg-music');
-    // Play saat pertama kali user klik di mana saja
-    document.addEventListener('click', () => {
-      audio.play();
-    }, { once: true });
+  const btn = document.getElementById("music-btn");
+  const music = document.getElementById("bg-music");
+
+  btn.addEventListener("click", () => {
+    if (music.paused) {
+      music.play();
+      btn.classList.add("playing");
+    } else {
+      music.pause();
+      btn.classList.remove("playing");
+    }
   });
 </script>
 </body>
